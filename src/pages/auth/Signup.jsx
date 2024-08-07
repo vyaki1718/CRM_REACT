@@ -26,14 +26,14 @@ function  Signup(){
                     placeholder="Password"
                     className="input text-white input-bordered input-secondary w-full max-w-xs" />           
                </div>
-               <div>
-                    <div className="dropdown mb-32">
-                      <div tabIndex={0} role="button" className="btn m-1">User Type</div>
-                        <ul tabIndex={0} className="dropdown-content menu bg-base-100 rounded-box z-[1] w-52 p-2 shadow">
-                            <li><a>Item 1</a></li>
-                            <li><a>Item 2</a></li>
-                        </ul>
-                    </div>
+               <div className="w-full">
+               <details className="dropdown">
+                    <summary className="btn">User Type</summary>
+                    <ul className="menu dropdown-content bg-base-100 text-white rounded-box z-[1] w-52 p-2 shadow">
+                        <li><a>Customer</a></li>
+                        <li><a>Enginner</a></li>
+                    </ul>
+                    </details>
                 </div>
                 <div className="w-full card-actions mt-4">
                 <button className="btn btn-warning w-full font-bold text-xl">Submit</button>
