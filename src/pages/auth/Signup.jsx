@@ -17,6 +17,8 @@ function  Signup(){
                 <div className="w-full">
                 <input
                     type="email"
+                    name="email"
+                    autoComplete="one-time-code"
                     placeholder="Email"
                     className="input text-white input-bordered input-secondary w-full max-w-xs" />
                 </div>
@@ -24,6 +26,7 @@ function  Signup(){
                <input
                     type="password"
                     placeholder="Password"
+                    autoComplete="one-time-code"
                     className="input text-white input-bordered input-secondary w-full max-w-xs" />           
                </div>
                <div className="w-full">
@@ -42,7 +45,7 @@ function  Signup(){
             </div>
         </div>
         </div>
-    )
+    );
 }
 
 export default Signup;

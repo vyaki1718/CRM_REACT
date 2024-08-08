@@ -11,12 +11,16 @@ function  Login(){
                 <div className="w-full">
                 <input
                     type="text"
+                    autoComplete="one-time-code"
                     placeholder="User ID"
+                    name="userId"
                     className="input text-white input-bordered input-secondary w-full max-w-xs" />
                 </div>
                <div className="w-full">
                <input
                     type="password"
+                    autoComplete="one-time-code"
+                    name="password"
                     placeholder="Password"
                     className="input text-white input-bordered input-secondary w-full max-w-xs" />           
                </div>
@@ -26,7 +30,7 @@ function  Login(){
             </div>
         </div>
         </div>
-    )
+    );
 }
 
 export default Login;
