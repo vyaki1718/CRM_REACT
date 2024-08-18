@@ -1,5 +1,60 @@
+import { useState } from "react";
+import { useDispatch } from "react-redux";
+import { Link, useNavigate } from "react-router-dom";
 
+import { signup } from '../../Redux/Slices/AuthSlice';
 function  Signup(){
+
+    const dispatch = useDispatch();
+    const navigator = useNavigate();
+
+    const [signupDetails, setSignupDetails] = useState({
+        email: "",
+        password: "",
+        name:"",
+        userType:"",
+        userStatus:"",
+        clientName:""
+    });
+
+    function handlInputChange(e){
+        const {name, value}= e.target;
+        setSignupDetails({...signupDetails, [name]:value});
+    }
+
+    function resetSignupState(){
+        setSignupDetails({
+            email: "",
+        password: "",
+        name:"",
+        userType:"",
+        userStatus:"",
+        clientName:""
+        });
+    }
+
+    async function onSubmit(){
+        console.log("sunmit");
+        if(!signupDetails.email || !signupDetails.password || !signupDetails.name || !signupDetails.userType || !signupDetails.userStatus || !signupDetails.clientName) return;
+        const response = await dispatch(signup(signupDetails));
+        console.log("res", response);
+        if(response.payload) navigator('/login');
+        else resetSignupState();
+    }
+
+    console.log("userDetail", signupDetails);
+    function handleUserType(e){
+        console.log("event",e.target.textContent);
+        const userType=e.target.textContent;
+        setSignupDetails({
+            ...signupDetails, 
+            userType:userType,
+            userStatus: userType === "customer" ? "approved" : "suspended",
+        });
+        const dp = document.getElementById('userTypeDropDown');
+        // dp.removeAttribute("open");
+        dp.open = !dp.open;
+    }
 
     return (
         <div className="flex justify-center items-center h-[90vh]">
@@ -10,38 +65,60 @@ function  Signup(){
                 </div>
                 <div className="w-full">
                 <input
+                onChange={handlInputChange}
                     type="text"
-                    placeholder="User ID"
-                    className="input text-white input-bordered input-secondary w-full max-w-xs" />
-                </div>
-                <div className="w-full">
-                <input
-                    type="email"
-                    name="email"
                     autoComplete="one-time-code"
-                    placeholder="Email"
+                    placeholder="Email ID"
+                    name="email"
+                    value={signupDetails.email}
                     className="input text-white input-bordered input-secondary w-full max-w-xs" />
                 </div>
                <div className="w-full">
                <input
+                    onChange={handlInputChange}
                     type="password"
-                    placeholder="Password"
                     autoComplete="one-time-code"
+                    name="password"
+                    placeholder="Password"
+                    value={signupDetails.password}
                     className="input text-white input-bordered input-secondary w-full max-w-xs" />           
                </div>
                <div className="w-full">
-               <details className="dropdown">
-                    <summary className="btn">User Type</summary>
-                    <ul className="menu dropdown-content bg-base-100 text-white rounded-box z-[1] w-52 p-2 shadow">
-                        <li><a>Customer</a></li>
-                        <li><a>Enginner</a></li>
+               <input
+                    onChange={handlInputChange}
+                    type="text"
+                    autoComplete="one-time-code"
+                    name="name"
+                    placeholder="User Name"
+                    value={signupDetails.name}
+                    className="input text-white input-bordered input-secondary w-full max-w-xs" />           
+               </div>
+               <div className="w-full flex justify-start gap-2">
+               <details className="dropdown" id="userTypeDropDown">
+                    <summary className="btn">{signupDetails?.userType?.toLocaleUpperCase() || "User Type"}</summary>
+                    <ul onClick={handleUserType} className="menu dropdown-content bg-base-100 text-white rounded-box z-[1] w-52 p-2 shadow">
+                        <li><a>customer</a></li>
+                        <li><a>engineer</a></li>
+                        <li><a>admin</a></li>
                     </ul>
                     </details>
                 </div>
+                <div className="w-full">
+               <input
+                    onChange={handlInputChange}
+                    type="text"
+                    autoComplete="one-time-code"
+                    name="clientName"
+                    placeholder="Client Name"
+                    value={signupDetails.clientName}
+                    className="input text-white input-bordered input-secondary w-full max-w-xs" />           
+               </div>
                 <div className="w-full card-actions mt-4">
-                <button className="btn btn-warning w-full font-bold text-xl">Submit</button>
+                <button onClick={onSubmit} className="btn btn-warning w-full font-bold text-xl">Submit</button>
                 </div> 
-                
+                <p className="text-l text-white">
+                    Don&apos;t have a account ? <Link className="text-yellow-200 hover:text-white" to="/signup">Signup instead</Link> 
+                </p>
             </div>
         </div>
         </div>
