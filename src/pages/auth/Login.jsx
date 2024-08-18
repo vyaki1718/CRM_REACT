@@ -1,4 +1,5 @@
 import { useState } from "react";
+import toast from "react-hot-toast";
 import { useDispatch } from "react-redux";
 import { Link,useNavigate } from "react-router-dom";
 
@@ -28,8 +29,14 @@ function  Login(){
     async function onSubmit(){
         if(!loginDetails.email || !loginDetails.password) return;
         const response = await dispatch(login(loginDetails));
-        if(response.payload) navigator('/');
-        else resetLogiState();
+        if(response.payload){ 
+            toast.success("Successfully logged in");
+            navigator('/home');
+        }
+        else {
+            toast.error("Invalid email or password");
+            resetLogiState();
+        }
     }
 
     return (

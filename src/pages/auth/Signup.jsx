@@ -1,4 +1,5 @@
 import { useState } from "react";
+import toast from "react-hot-toast";
 import { useDispatch } from "react-redux";
 import { Link, useNavigate } from "react-router-dom";
 
@@ -38,8 +39,15 @@ function  Signup(){
         if(!signupDetails.email || !signupDetails.password || !signupDetails.name || !signupDetails.userType || !signupDetails.userStatus || !signupDetails.clientName) return;
         const response = await dispatch(signup(signupDetails));
         console.log("res", response);
-        if(response.payload) navigator('/login');
-        else resetSignupState();
+        if(response.payload) {
+            navigator('/login');
+            toast.success("Successfully signed up");
+        }
+        else{ 
+            console.log("esle called");
+            toast.error("Something went wrong, please try again");
+            resetSignupState();
+        }
     }
 
     console.log("userDetail", signupDetails);
@@ -61,7 +69,7 @@ function  Signup(){
        <div className="card bg-primary text-primary-content w-96">
             <div className="card-body flex flex-col items-center">
                 <div className="w-full flex justify-center">
-                  <h2 className="card-title text-4xl text-white">Login</h2>
+                  <h2 className="card-title text-4xl text-white">Signup</h2>
                 </div>
                 <div className="w-full">
                 <input
@@ -117,7 +125,7 @@ function  Signup(){
                 <button onClick={onSubmit} className="btn btn-warning w-full font-bold text-xl">Submit</button>
                 </div> 
                 <p className="text-l text-white">
-                    Don&apos;t have a account ? <Link className="text-yellow-200 hover:text-white" to="/signup">Signup instead</Link> 
+                   Already have an account ? <Link className="text-yellow-200 hover:text-white" to="/">Login instead</Link> 
                 </p>
             </div>
         </div>
