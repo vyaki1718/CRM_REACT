@@ -18,7 +18,6 @@ export const login = createAsyncThunk('/auth/login', async (data) =>{
 });
 
 export const signup = createAsyncThunk('/auth/signup', async (data) =>{
-    console.log("sinup called");
     try {
         const response = await axiosInstance.post('auth/signup', data);
         return response;
@@ -27,10 +26,19 @@ export const signup = createAsyncThunk('/auth/signup', async (data) =>{
     }
 });
 
+
 const authSlice = createSlice({
     name:'auth',
     initialState,
-    reducers:{},
+    reducers:{
+        logout: (state)=>{
+            localStorage.clear();
+            state.isLoggedIn = false;
+            state.role = "";
+            state.data = undefined;    
+            state.token = "";
+        }
+    },
     extraReducers:(builder) =>{
         builder.addCase(login.fulfilled, (state, action)=>{
             if(!action.payload) return ;
@@ -47,4 +55,5 @@ const authSlice = createSlice({
 
 });
 
+export const { logout } = authSlice.actions;
 export default authSlice.reducer;
