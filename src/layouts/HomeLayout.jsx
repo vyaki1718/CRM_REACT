@@ -1,3 +1,4 @@
+import { useEffect } from "react";
 import { BsFillMenuButtonWideFill } from "react-icons/bs";
 import { useDispatch, useSelector } from "react-redux";
 import { Link, useNavigate } from "react-router-dom";
@@ -10,8 +11,14 @@ function HomeLayout({children}) {
     const navigator = useNavigate();
     function onLogOut(){
            dispatch(logout());
-           navigator('/');
+           navigator('/login');
     }
+
+    useEffect(()=>{
+      if(!authState.isLoggedIn){
+        navigator('/login');
+      }
+    },[]);
   return (
     <>
       <div className="min-h-[90vh]">
@@ -45,7 +52,7 @@ function HomeLayout({children}) {
                         {
                             !authState.isLoggedIn ? (
                                 <>
-                                    <Link to={'/'} style={{backgroundColor:"gray"}} className="btn-primary px-4 py-1 rounded-md font-semibold w-full">Login</Link>
+                                    <Link to={'/login'} style={{backgroundColor:"gray"}} className="btn-primary px-4 py-1 rounded-md font-semibold w-full">Login</Link>
                                     <Link to={'/signup'} style={{backgroundColor:"gray"}} className="btn-secondary px-4 py-1 rounded-md font-semibold w-full">Signup</Link>
                                 </>
                             ) : (

@@ -31,7 +31,7 @@ function  Login(){
         const response = await dispatch(login(loginDetails));
         if(response.payload){ 
             toast.success("Successfully logged in");
-            navigator('/home');
+            navigator('/');
         }
         else {
             toast.error("Invalid email or password");
