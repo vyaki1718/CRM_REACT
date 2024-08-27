@@ -69,7 +69,7 @@ function HomeLayout({children}) {
         </div>
        <div className="flex items-start justify-center">
         <div className="w-3/4">
-       {children}
+            {children}
        </div>
        </div>
       </div>
